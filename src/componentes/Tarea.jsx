@@ -8,17 +8,18 @@ import {
   Menu,
   Box,
   Typography,
+  Tooltip,
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-
 const estilos = {
   listItem: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-start",
     padding: "15px",
+    cursor: "default",
     borderBottom: "1px solid rgba(0,0,0,0.2)",
     "&:nth-last-child(1)": {
       borderBottom: "none",
@@ -38,11 +39,9 @@ const estilos = {
     },
   },
 };
-
 export const Tarea = ({ tarea, completarTarea, eliminarTarea }) => {
   const [abierto, setAbierto] = useState(false);
   const [menuAbierto, setMenuAbierto] = useState(null);
-
   const manejarDialogo = (valor) => setAbierto(valor);
   const manejarMenu = (event) =>
     setMenuAbierto(event ? event.currentTarget : null);
@@ -50,7 +49,6 @@ export const Tarea = ({ tarea, completarTarea, eliminarTarea }) => {
     manejarDialogo(false);
     eliminarTarea(tarea.id);
   };
-
   return (
     <ListItem sx={estilos.listItem}>
       <Box
@@ -59,10 +57,11 @@ export const Tarea = ({ tarea, completarTarea, eliminarTarea }) => {
         alignItems="start"
         width="100%"
       >
-        <Typography variant="body2" color="textSecondary">
-          {tarea.fecha}
-        </Typography>
-
+        <Tooltip title={tarea.fecha}>
+          <Typography variant="body2" color="textSecondary">
+            {tarea.fecha}
+          </Typography>
+        </Tooltip>
         <Box
           display="flex"
           justifyContent="space-between"
@@ -88,14 +87,14 @@ export const Tarea = ({ tarea, completarTarea, eliminarTarea }) => {
               overflowWrap: "break-word",
             }}
           />
-          <MoreHorizIcon
-            title="Más opciones"
-            variant="contained"
-            color="default"
-            sx={estilos.MoreHorizIcon}
-            onClick={manejarMenu}
-          />
-
+          <Tooltip title="Más opciones">
+            <MoreHorizIcon
+              variant="contained"
+              color="default"
+              sx={estilos.MoreHorizIcon}
+              onClick={manejarMenu}
+            />
+          </Tooltip>
           <Menu
             anchorEl={menuAbierto}
             open={Boolean(menuAbierto)}
@@ -108,13 +107,16 @@ export const Tarea = ({ tarea, completarTarea, eliminarTarea }) => {
               manejarMenu={manejarMenu}
             />
           </Menu>
-
           <DialogoConfirmacion
             abierto={abierto}
             manejarCerrar={() => manejarDialogo(false)}
             botones={[
               { etiqueta: "Cancelar", onClick: () => manejarDialogo(false) },
-              { etiqueta: "Eliminar", onClick: manejarConfirmar, autoFocus: true },
+              {
+                etiqueta: "Eliminar",
+                onClick: manejarConfirmar,
+                autoFocus: true,
+              },
             ]}
           />
         </Box>

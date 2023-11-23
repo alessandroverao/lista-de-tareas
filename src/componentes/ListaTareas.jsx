@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Tarea } from "./Tarea";
 import { MenuListaTareas } from "./MenuListaTareas";
-import { Box, Badge, List, Typography } from "@mui/material";
+import { Box, Badge, List, Typography, Tooltip } from "@mui/material";
 import {
   CheckCircleOutlineRounded,
   HighlightOffRounded,
@@ -17,6 +17,7 @@ const estilos = {
     backgroundColor: "rgba(255, 255, 255, 0.4)",
     borderRadius: "5px",
     boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.5)",
+    cursor: "default",
   },
   texto: {
     margin: "10px",
@@ -58,37 +59,42 @@ export const ListaTareas = ({ tareas, completarTarea, eliminarTarea }) => {
         alignItems="center"
         sx={estilos.texto}
       >
-        <Typography
-          variant="h5"
-          component="div"
-          style={{
-            fontFamily: "'Bungee Spice', cursive",
-            cursor: "default",
-          }}
-        >
-          Lista de tareas
-        </Typography>
+        <Tooltip title="Lista de tareas">
+          <Typography
+            variant="h5"
+            component="div"
+            style={{
+              fontFamily: "'Bungee Spice', cursive",
+              opacity: "0.8",
+              textShadow: "2px 2px 4px #000000",
+            }}
+          >
+            Lista de tareas
+          </Typography>
+        </Tooltip>
         <MenuListaTareas setOrden={setOrden} setVista={setVista} />
         <Box>
-          <Badge
-            title={`Tareas pendientes: ${tareasPendientes}`}
-            badgeContent={Math.min(tareasPendientes, 99) || "0"}
-            color="error"
-            sx={{ margin: "5px", opacity:"0.8" }}
-          >
-            <HighlightOffRounded />
-          </Badge>
-          <Badge
-            title={`Tareas pendientes: ${tareasCompletadas}`}
-            badgeContent={Math.min(tareasCompletadas, 99) || "0"}
-            // Usa la función min del objeto Math. Toma dos argumentos, tareasCompletadas y 99, y devuelve el menor de los dos.
-            // El badge tendra el número de tareas realizadas, pero no más de 99. Si es mas de 99 mostrara el 99.
-            // se usa el || en el caso de que "tareasCompletadas" no tenga ningun valor y mostrara 0.
-            color="success"
-            sx={{ margin: "5px", opacity:"0.8" }}
-          >
-            <CheckCircleOutlineRounded />
-          </Badge>
+          <Tooltip title={`Tareas pendientes: ${tareasPendientes}`}>
+            <Badge
+              badgeContent={Math.min(tareasPendientes, 99) || "0"}
+              color="error"
+              sx={{ margin: "5px", opacity: "0.8" }}
+            >
+              <HighlightOffRounded />
+            </Badge>
+          </Tooltip>
+          <Tooltip title={`Tareas realizadas: ${tareasCompletadas}`}>
+            <Badge
+              badgeContent={Math.min(tareasCompletadas, 99) || "0"}
+              // Usa la función min del objeto Math. Toma dos argumentos, tareasCompletadas y 99, y devuelve el menor de los dos.
+              // El badge tendra el número de tareas realizadas, pero no más de 99. Si es mas de 99 mostrara el 99.
+              // se usa el || en el caso de que "tareasCompletadas" no tenga ningun valor y mostrara 0.
+              color="success"
+              sx={{ margin: "5px", opacity: "0.8" }}
+            >
+              <CheckCircleOutlineRounded />
+            </Badge>
+          </Tooltip>
         </Box>
       </Box>
       {tareasFiltradasYOrdenadas.map((tarea) => (

@@ -3,7 +3,7 @@ import { useState } from "react";
 // Importación del componente DialogoConfirmacion
 import { DialogoConfirmacion } from "./DialogoConfirmacion";
 // Importación de los componentes Button y TextField de Material-UI
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Tooltip } from "@mui/material";
 // Importación del icono Add de Material-UI
 import AddIcon from "@mui/icons-material/Add";
 
@@ -23,15 +23,16 @@ const InputField = ({ value, onChange }) => (
 // Componente SubmitButton
 const SubmitButton = () => (
   // Este componente es el botón para enviar el texto a la lista
-  <Button
-    title="Agregar tarea"
-    type="submit"
-    variant="contained"
-    color="warning"
-    sx={{ margin: "10px" }}
-  >
-    <AddIcon />
-  </Button>
+  <Tooltip title="Agregar tarea">
+    <Button
+      type="submit"
+      variant="contained"
+      color="warning"
+      sx={{ margin: "10px", opacity: "0.8" }}
+    >
+      <AddIcon />
+    </Button>
+  </Tooltip>
 );
 
 // Exportación del componente principal Formulario
@@ -67,11 +68,11 @@ export const Formulario = ({ agregarTarea }) => {
         // Estilos del formulario
         style={{ display: "flex", alignItems: "center", maxWidth: "600px" }}
       >
-        <InputField 
+        <InputField
           // El valor del campo de entrada es el estado actual del nombre de la tarea
-          value={nombre} 
+          value={nombre}
           // Cuando cambia el valor del campo de entrada, se actualiza el estado del nombre de la tarea
-          onChange={(e) => setNombre(e.target.value)} 
+          onChange={(e) => setNombre(e.target.value)}
         />
         <SubmitButton />
       </form>
@@ -90,7 +91,6 @@ export const Formulario = ({ agregarTarea }) => {
           { etiqueta: "Aceptar", onClick: toggleDialog, autoFocus: true },
         ]}
       />
-
     </div>
   );
 };
