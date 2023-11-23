@@ -72,7 +72,6 @@ export const ListaTareas = ({ tareas, completarTarea, eliminarTarea }) => {
             Lista de tareas
           </Typography>
         </Tooltip>
-        <MenuListaTareas setOrden={setOrden} setVista={setVista} />
         <Box>
           <Tooltip title={`Tareas pendientes: ${tareasPendientes}`}>
             <Badge
@@ -96,6 +95,8 @@ export const ListaTareas = ({ tareas, completarTarea, eliminarTarea }) => {
             </Badge>
           </Tooltip>
         </Box>
+        <MenuListaTareas setOrden={setOrden} setVista={setVista} />
+
       </Box>
       {tareasFiltradasYOrdenadas.map((tarea) => (
         // map crea un nuevo array con los resultados de llamar a una función para cada elemento del array original
